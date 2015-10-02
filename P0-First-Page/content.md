@@ -205,3 +205,7 @@ Make it look like this:
 
 We would also want to add an icon for the extension in the general tab of the target.
 ![Adding an icon](Adding_icon.png)
+
+#Summary
+
+Apple allowed custom extensions with the release of iOS 8.  Extensions allow apps to perform certain activities while outside of their running app.  Creating a Share Extension that uploads photos is a great addition to our Makestagram app.  It takes a few steps: add a new target to the existing project, connect Parse by sharing login details, and then uploading a photo.  Apple allows many different kinds of extensions, be sure to check them out.  Happy coding!

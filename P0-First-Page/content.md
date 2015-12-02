@@ -13,35 +13,36 @@ If I press the Facebook icon in photos app I can **share** the photo Facebook us
 It is preferable that you already completed the Makestagram tutorial, though this is not a must. Please download my [updated source code for Makestgram](http://github.com/tylerweitzman/Makestagram-Swift-Solution), with Parse updated to the latest framework. You may have to run `pod install` to get it working. [(See our Cocoapods tutorial)](https://www.makeschool.com/sa/tutorial/learn-how-to-build-makestagram-part-2/installing-libraries-using-cocoapods). Also, you will need to make sure to have an **iPhone Developer Account** and set up an App ID for the project with _App Group Privileges_. App Groups is a service provided by Apple that allows two parts of your application to communicate with each other. That is, your main app, Makestagram, is going to communicate with your extension. We call the main app our **containing application** and the extension our **contained application**. 
 
 You can see a tutorial for adding an App ID under part 2 of [How to ship your app](https://www.makeschool.com/sa/tutorial/how-to-ship-your-app). Enabling _App Group Privileges_ is just a matter of checking a box under App Services (see photo below).
-![Enabling App Group Privileges](AppGroup_ID.png)
+![Enabling App Group Privileges](AppGroup_ID.png "Enabling App Group Privileges")
 
 I created my own App ID called `com.tylerweitzman.Makestagram` -- yours will probably look similar but with your name instead of mine-- tylerweitzman.
 
 Now make sure to go and change your bundle identifier inside of the Info.plist file. Simply edit the `Bundle identifier` key (photo below).
-![Bundle Identifier](bundle_id.png)
+![Bundle Identifier](bundle_id.png "Bundle Identifier")
 
 #Time to create the extension
 We can create a blank share extension by going to File -> New Target -> Share Extension
-![New Target](NewTarget.png)
-![New Share Extension](NewShareExtension.png)
+![New Target](NewTarget.png "New Target")
+![New Share Extension](NewShareExtension.png "New Share Extension")
 Give it any name you'd like with no spaces. I'm calling mine `SharePost`. **No spaces please**.
 
 By the way, the option to create an action extension is quite similar. Both of these applications come with a template to get you started. I am a little disappointed in Apple because neither template is good enough and each one has components that the other needs. You will soon be provided in this tutorial with some boilerplate code that comes from the action extension template.
 
 Before running the extension, let's make sure that we have the right app identifier set for the extension. Go to the Info.plist file that is inside the _extension_ folder and make sure that it is set to the app id you created online followed by the name of the extension. Mine is `com.tylerweitzman.Makestagram.SharePost`
-![Extension id](Bundle_Extension.png)
+![Extension id](Bundle_Extension.png "Extension id")
 And if yours was not already set properly, you probably forgot to change the app identifier for the main application (so make sure you fix that now).
 
 Let's try running our extension. Notice that you can choose which application you want to run on the left of the iPhone simulator.
-![Share Post Scheme](SharePostScheme.png)
-![Makestagram Scheme](MakestagramScheme.png)
+
+![Share Post Scheme](SharePostScheme.png "Share Post Scheme")
+![Makestagram Scheme](MakestagramScheme.png "Makestagram Scheme")
 
 These two options are also known as **schemes**. We have the `SharePost` scheme and the `Makestagram` scheme. Notice that because the SharePost app is an extension you are asked where you would like to run it on the phone. Go ahead and try the photos app. You can then try sharing a post with the extension (you'll have to add it in under more).
 
 Note: I ran into a few issues before I got it running. Xcode was giving me strange errors and I needed to restart Xcode, run another pod install, reset my simulator, **and** clear my derived data -- `sudo rm -rf ~/Library/Developer/Xcode/DerivedData/` in terminal.
 
-![More](More.png)
-![More2](More2.png)
+![More](More.png "More Button")
+![More2](More2.png "More Button 2")
 
 By the way, you will have to redo this process with the more button every single time while debugging, in fact you will need to turn off the extension and then turn it back on every single time; however it won't act like this once you submit it to Apple.
 
@@ -116,15 +117,15 @@ We solve this issue using **App Groups** and **Keychain Sharing**. Together, the
 
 #Sharing the User's Login
 Click on the main project in the top left under the file navigator, then choose the "Makestagram" target, and then choose the Capabilities tab.
-![Capabilities of Makestagram Target](Makestagram_Capabilities.png)
+![Capabilities of Makestagram Target](Makestagram_Capabilities.png "Capabilities of Makestagram Target")
 Now click the **ON** button for Keychain sharing.
-![Keychain On](Keychain_ON1.png)
+![Keychain On](Keychain_ON1.png "Keychain On")
 And click **ON** for App Groups
 And add a **group identifier name**. I called mine `group.tylerweitzman.MakestagramGroup`
-![App Group On](AppGroup_ON1.png)
+![App Group On](AppGroup_ON1.png "App Group On")
 
 Now switch to the SharePost extension target and do the same thing there. Your app group name will be the same, and your Keychain will be appended with the extension target name. Both should pre-fill automatically.
-![Keychain and App Groups for Extension](SharePost_ON.png)
+![Keychain and App Groups for Extension](SharePost_ON.png "Keychain and App Groups for Extension")
 
 Now that we have activated these services in the developer page and in our project capabilities, we need to let Parse now that it can use this new group. Save the identifier (`group.tylerweitzman.MakestagramGroup` for example) as you'll need to use it soon.
 
@@ -157,7 +158,7 @@ Now let's test this. You will have to run the main application first and log in 
 >password: test
 
 And then when I ran the extension app and tried posting a photo it printed the username in my console.
-![Console](console.png)
+![Console](console.png "Console")
 
 #Uploading the posted image
 Now we have everything set up for the final step -- uploading our image!
@@ -199,9 +200,13 @@ Now you should be able to post as many times as you'd like.
 Note that if we were going to post this on the App Store, we would have to designate that this extension is particularly for **photo** sharing. We can do that in the Info.plist of the extension.
 
 Instead of looking like this:
-![Old Plist](old_plist.png)
+![Old Plist](old_plist.png "Old Plist")
 Make it look like this:
-![New Plist](new_plist.png)
+![New Plist](new_plist.png "New Plist")
 
 We would also want to add an icon for the extension in the general tab of the target.
-![Adding an icon](Adding_icon.png)
+![Adding an icon](Adding_icon.png "Adding an icon")
+
+#Summary
+
+Apple allowed custom extensions with the release of iOS 8.  Extensions allow apps to perform certain activities while outside of their running app.  Creating a Share Extension that uploads photos is a great addition to our Makestagram app.  It takes a few steps: add a new target to the existing project, connect Parse by sharing login details, and then uploading a photo.  Apple allows many different kinds of extensions, be sure to check them out.  Happy coding!
